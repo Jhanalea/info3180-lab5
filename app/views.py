@@ -8,7 +8,7 @@ from flask_wtf.csrf import generate_csrf
 from werkzeug.utils import secure_filename
 
 from app import app, db
-from flask import render_template, request, jsonify, send_file, flash
+from flask import render_template, request, jsonify, send_file, flash, url_for, send_from_directory
 from app.models import Movie
 from app.forms import MovieForm
 import os, datetime
@@ -56,6 +56,21 @@ def movies():
 @app.route('/api/v1/csrf-token', methods=['GET'])
 def get_csrf():
     return jsonify({'csrf_token': generate_csrf()})
+
+@app.route("/api/v1/movies", methods=['GET'])
+def get_movies():
+    movies = db.session.execute(db.select(Movie)).scalars()
+    movie_data = [{
+        "id": movie.id,
+        "title": movie.title,
+        "description": movie.description,
+        "poster": url_for('get_image', filename=movie.poster)
+    } for movie in movies]
+    return jsonify(data=movie_data)
+
+@app.route('/api/v1/posters/<filename>')
+def get_image(filename):
+    return send_from_directory(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER']), filename)
 
 ###
 # The functions below should be applicable to all Flask apps.
