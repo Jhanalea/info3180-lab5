@@ -16,12 +16,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <RouterLink to="/" class="nav-link active">Home</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" to="/about">About</RouterLink>
-            </li>
+              <li class="nav-item">
+                  <RouterLink to="/" class="nav-link active">Home</RouterLink>
+              </li>
+              <li class="nav-item">
+                  <RouterLink class="nav-link" to="/about">About</RouterLink>
+              </li>
+              <li class="nav-item">
+                  <RouterLink class="nav-link" to="/movies/create">Add Movie</RouterLink>
+              </li>
           </ul>
         </div>
       </div>
